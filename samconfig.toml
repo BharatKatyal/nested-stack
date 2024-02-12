@@ -1,0 +1,9 @@
+version = 0.1
+[default.deploy.parameters]
+stack_name = "my-nested-stack"
+resolve_s3 = true
+s3_prefix = "my-nested-stack"
+region = "us-east-1"
+profile = "bharat-magic"
+capabilities = "CAPABILITY_IAM CAPABILITY_NAMED_IAM CAPABILITY_AUTO_EXPAND"
+image_repositories = []

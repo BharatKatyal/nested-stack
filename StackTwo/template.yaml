@@ -10,27 +10,33 @@ Globals:
     Timeout: 5
     Runtime: python3.9
 Parameters:
-    GameDataBucket:
+    StorageBucketName:
       Type: String
-      Description: S3 Bucket for game data
+      Description: The name of the S3 bucket created from other stack
 
 Resources:
-  QueryLambda:
-    Type: AWS::Serverless::Function
+
+  HelloWorldFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
-      CodeUri: lambdas/query_function
+      CodeUri: src/hello_world/
       Handler: app.lambda_handler
       Runtime: python3.9
-      Timeout: 60
-      Policies:
-        - AmazonDynamoDBFullAccess
-        - AmazonAthenaFullAccess
-        - AmazonS3FullAccess
       Environment:
         Variables:
-          BUCKET_NAME: !Ref GameDataBucket
+          BUCKET_NAME: !Ref StorageBucketName
+      Architectures:
+      - x86_64
+      Events:
+        HelloWorld:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /hello
+            Method: get
+
+
 
 Outputs:
-  QueryLambda:
-    Description: "Query Lambda Function"
-    Value: !Ref QueryLambda
+  HelloWorldApi:
+    Description: "API Gateway endpoint URL for Prod stage for Hello World function"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/hello/"
