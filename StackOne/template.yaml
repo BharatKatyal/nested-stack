@@ -5,21 +5,25 @@ Description: >
 
   Root stack to showcase nested stack resources
 
-
-
+Parameters:
+  StackName:
+    Type: String
+    Description: The name of the main stack
 
 Resources:
 
-  StorageBucketBucket:
+  StorageBucket:
     Type: AWS::S3::Bucket
     Properties:
-      BucketName: "bknested-game-data-bucket"
+      BucketName:  !Sub "${StackName}-nested-stack"
 
+
+  # SecondStorageBucket:
+  #   Type: AWS::S3::Bucket
+  #   Properties:
+  #     BucketName:  !Sub ${AWS::StackName}-second-nested-stack
 Outputs:
 
-  S3Bucket:
+  S3BucketName:
     Description: "S3 Bucket Name for game data"
-    Value: !Ref StorageBucketBucket
-
-     
-
+    Value: !Ref StorageBucket

@@ -5,20 +5,25 @@ Description: >
 
   Root stack to showcase nested stack resources
 
-
-
+Outputs:
+  S3Bucket:
+    Value: !Ref StackOne.Outputs.S3Bucket
 
 Resources:
   StackOne:
     Type: AWS::Serverless::Application
     Properties:
       Location: StackOne/template.yaml
+      Parameters:
+        StackName: !Sub "${AWS::StackName}"
 
   StackTwo:
     Type: AWS::Serverless::Application
     Properties:
       Location: StackTwo/template.yaml
       Parameters:
-        StorageBucketName: !GetAtt StackOne.Outputs.S3Bucket
-     
-
+        StorageBucketName: !GetAtt StackOne.Outputs.S3BucketName
+    DependsOn: StackOne
+Outputs:
+  S3Bucket:
+    Value: !GetAtt StackOne.Outputs.S3BucketName

@@ -1,8 +1,8 @@
 version = 0.1
 [default.deploy.parameters]
-stack_name = "my-nested-stack"
+stack_name = "stacktwo-nested"
 resolve_s3 = true
-s3_prefix = "my-nested-stack"
+s3_prefix = "stacktwo-nested"
 region = "us-east-1"
 profile = "bharat-magic"
 capabilities = "CAPABILITY_IAM CAPABILITY_NAMED_IAM CAPABILITY_AUTO_EXPAND"
