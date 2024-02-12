@@ -1,0 +1,24 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  nested-stack
+
+  Root stack to showcase nested stack resources
+
+
+
+
+Resources:
+  StackOne:
+    Type: AWS::Serverless::Application
+    Properties:
+      Location: StackOne/template.yaml
+
+  QueryEngine:
+    Type: AWS::Serverless::Application
+    Properties:
+      Location: StackTwo/template.yaml
+      Parameters:
+        StorageBucketName: !GetAtt StackOne.Outputs.S3Bucket
+     
+
