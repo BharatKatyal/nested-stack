@@ -1,0 +1,25 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  nested-stack-storage
+
+  Root stack to showcase nested stack resources
+
+
+
+
+Resources:
+
+  StorageBucketBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: "bknested-game-data-bucket"
+
+Outputs:
+
+  S3Bucket:
+    Description: "S3 Bucket Name for game data"
+    Value: !Ref StorageBucketBucket
+
+     
+

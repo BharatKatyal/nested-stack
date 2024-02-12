@@ -1,0 +1,36 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  nested-stack-storage
+
+  Root stack to showcase nested stack resources
+
+Globals:
+  Function:
+    Timeout: 5
+    Runtime: python3.9
+Parameters:
+    GameDataBucket:
+      Type: String
+      Description: S3 Bucket for game data
+
+Resources:
+  QueryLambda:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: lambdas/query_function
+      Handler: app.lambda_handler
+      Runtime: python3.9
+      Timeout: 60
+      Policies:
+        - AmazonDynamoDBFullAccess
+        - AmazonAthenaFullAccess
+        - AmazonS3FullAccess
+      Environment:
+        Variables:
+          BUCKET_NAME: !Ref GameDataBucket
+
+Outputs:
+  QueryLambda:
+    Description: "Query Lambda Function"
+    Value: !Ref QueryLambda

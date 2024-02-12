@@ -14,7 +14,7 @@ Resources:
     Properties:
       Location: StackOne/template.yaml
 
-  QueryEngine:
+  StackTwo:
     Type: AWS::Serverless::Application
     Properties:
       Location: StackTwo/template.yaml
